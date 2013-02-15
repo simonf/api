@@ -1,5 +1,7 @@
+util = require 'util'
 express = require 'express'
-remdb = require './reminder-db.js'
+db = require './db.js'
+Activity = require './activity.js'
 app = express()
 
 
@@ -17,7 +19,7 @@ errorHandler = (err, req, res, next) ->
 	res.status 500
 	res.render 'error', { error: err }
 
-
+app.use express.static __dirname + '/public'
 app.use express.bodyParser()
 app.use express.methodOverride()
 app.use app.router
@@ -26,17 +28,27 @@ app.use clientErrorHandler
 app.use errorHandler
 
 app.get "/reminders", (req,res) ->
-	remdb.all \
+	db.all 'reminders',\
 		((arr) -> res.send arr), \
 		((err) -> 
 			res.status 500
 			res.send err
 		)
 
-
 app.post "/reminder", (req,res) ->
 	res.send 501
 
+app.post "/activity", (req,res) ->
+	b= req.body
+	b.type = "Activity"
+	a = new Activity()
+	a.copy_from b
+	db.save 'activities',a,\
+		((doc) -> res.send 200), \
+		((err) -> 
+			res.status 500
+			res.send err
+		)
 
 app.listen 2000
 

@@ -1,23 +1,22 @@
 Syncable = require './syncable.js'
 
 module.exports = class Reminder extends Syncable
-	constructor: (@when) ->
+	constructor: (@when, @message="Default", @category="") ->
 		super()
-		@message = "Default"
+		@type="Reminder"
 		@repeat = {
 			year: 0,
 			month: 0,
 			days: 0,
 			hours: 0
 		}
-		@category = ""
 		@mechanisms = ["mail","tweet","sms","other"]
 		@addresses = ["simon@home.simonf.net","seymourmania","+447960308451","pi-chime"]
 		@shouldRun = true
 
 	shouldExecute: ->
 		now = new Date()
-		@shouldRun and now.getUTCFullYear() == @when.getUTCFullYear() and now.getUTCMonth() ==  @when.getUTCMonth() and now.getUTCDate() == @when.getUTCDate and now.getUTCHours() == @when.getUTCHours and now.getUTCMinutes == @when.getUTCMinutes
+		@shouldRun and now.getUTCFullYear() == @when.getUTCFullYear() and now.getUTCMonth() ==  @when.getUTCMonth() and now.getUTCDate() == @when.getUTCDate and now.getUTCHours() == @when.getUTCHours and now.getUTCMinutes >= @when.getUTCMinutes
 
 	executed: ->
 		@shouldRun = false

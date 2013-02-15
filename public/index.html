@@ -1,0 +1,39 @@
+<html>
+<head>
+	<title>API</title>
+</head>
+<body>
+	<form method="post" action="/activity" enctype="application/json">
+		<div>
+			<label for="a_what">What</label>
+			<input id="a_what" type="text" name="what"/>
+		</div>
+		<div>
+			<label for="a_category">Category</label>
+			<input id="a_category" type="text" name="category"/>
+		</div>
+		<div id="real_when">
+			<label for="a_when">When(*)</label>
+			<input id="a_when" type="datetime" name="when"/>
+		</div>
+		<div id="dummy_when">
+			<label for="d_when">When</label>
+			<input id="d_when" type="datetime" name="dummy_when"/>
+		<div>
+			<label for="a_quantity">Quantity</label>
+			<input id="a_quantity" type="text" name="quantity"/>
+		</div>
+		<input type="submit">Submit</input>
+	</form>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+$("#real_when").show();
+$("#dummy_when").show();
+$("#d_when").blur(function(){
+	d = $("#d_when").val();
+	dd = Date.parse(d);
+	$("#a_when").val(dd);
+});
+</script>
+</body>
+</html>

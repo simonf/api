@@ -4,6 +4,17 @@ module.exports = class Syncable
 		@guid = this.makeGUID()
 		@changedTimestamp = @creationTimestamp
 		@deletedTimestamp = 0
+		@type="Syncable"
+
+	copy_from: (obj) ->
+		return if obj.type != @type and console.log "Not copying #{obj.type} to #{@type}"
+		for k,v of this
+			t = typeof this[k]
+			if 'function' != t
+				tk = typeof obj[k]
+				if t == tk or (t=='undefined' and tk != 'undefined')
+					console.log "#{this[k]} <- #{obj[k]}"
+					this[k] = obj[k]
 
 	getNowInGMT: ->
 		now = new Date()
