@@ -19,6 +19,17 @@ errorHandler = (err, req, res, next) ->
 	res.status 500
 	res.render 'error', { error: err }
 
+saveSyncable = (input_object, vanilla_object, db_name, res) ->
+	console.log input_object
+	input_object.type = vanilla_object.type
+	vanilla_object.copy_from input_object
+	db.save db_name, vanilla_object, \
+		((doc) -> res.send 200), \
+		((err) -> 
+			res.status 500
+			res.send err
+		)
+
 app.use express.static __dirname + '/public'
 app.use express.bodyParser()
 app.use express.methodOverride()
@@ -39,7 +50,8 @@ app.post "/reminder", (req,res) ->
 	res.send 501
 
 app.post "/activity", (req,res) ->
-	b= req.body
+	saveSyncable req.body, new Activity(), 'activities', res
+###	b= req.body
 	b.type = "Activity"
 	a = new Activity()
 	a.copy_from b
@@ -49,7 +61,7 @@ app.post "/activity", (req,res) ->
 			res.status 500
 			res.send err
 		)
-
+###
 app.listen 2000
 
 
