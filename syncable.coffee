@@ -13,7 +13,6 @@ module.exports = class Syncable
 			if 'function' != t
 				tk = typeof obj[k]
 				if t == tk or (t=='undefined' and tk != 'undefined')
-					console.log "#{this[k]} <- #{obj[k]}"
 					this[k] = obj[k]
 
 	getNowInGMT: ->

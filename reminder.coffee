@@ -26,3 +26,8 @@ module.exports = class Reminder extends Syncable
 			@when.setTime @when.getTime()+@repeat.days*24*3600*1000
 			@when.setTime @when.getTime()+@repeat.hours*3600*1000
 			@shouldRun = true
+
+	copy_from: (obj)->
+		super(obj)
+		if typeof obj.when == 'string'
+			@when = new Date parseInt obj.when

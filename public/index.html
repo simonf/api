@@ -25,14 +25,39 @@
 		</div>
 		<input type="submit">Submit</input>
 	</form>
+	<table id="a_table">
+		<thead>
+			<tr>
+				<th>What</th><th>When</th><th>Category</th><th>Qty</th>
+			</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript">
-$("#real_when").show();
+$("#real_when").hide();
 $("#dummy_when").show();
+$("#d_when").val(new Date().toString());
 $("#d_when").blur(function(){
 	d = $("#d_when").val();
 	dd = Date.parse(d);
-	$("#a_when").val(dd);
+	if(isNaN(dd)) {
+		$("#d_when").css('background-color','red');
+	} else {
+		$("#d_when").css('background-color','#00aa00');
+		$("#a_when").val(dd);
+	}
+});
+</script>
+<script type="text/javascript">
+$(function(){
+	$.getJSON('/activities', function(data) {
+  		var items = [];
+ 		$.each(data, function(ndx, val) {
+    		items.push('<tr><td>'+val.what+'</td><td>'+val.when+'</td><td>'+val.category+'</td><td>'+val.quantity+'</td></tr>');
+  		});
+ 		$('#a_table tbody').append(items.join(''));
+	});
 });
 </script>
 </body>

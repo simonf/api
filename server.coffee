@@ -47,21 +47,19 @@ app.get "/reminders", (req,res) ->
 		)
 
 app.post "/reminder", (req,res) ->
-	res.send 501
+	saveSyncable req.body, new Reminder(), 'reminders', res
 
-app.post "/activity", (req,res) ->
-	saveSyncable req.body, new Activity(), 'activities', res
-###	b= req.body
-	b.type = "Activity"
-	a = new Activity()
-	a.copy_from b
-	db.save 'activities',a,\
-		((doc) -> res.send 200), \
+app.get "/activities", (req,res) ->
+	db.all 'activities', \
+		((arr) -> res.send arr), \
 		((err) -> 
 			res.status 500
 			res.send err
-		)
-###
+		)	
+
+app.post "/activity", (req,res) ->
+	saveSyncable req.body, new Activity(), 'activities', res
+
 app.listen 2000
 
 

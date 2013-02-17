@@ -8,7 +8,6 @@ exports.connect = (dbname, callback) ->
 			console.log "error", err
 			callback null
 		else if exists 
-			console.log "db exists"
 			callback db
 		else 
 			console.log "database does not exist."
@@ -20,7 +19,6 @@ exports.save = (dbname, obj, callback, errh) ->
 	this.connect dbname, (db) ->
 		db.get obj.guid, (err,doc) ->
 			if err 
-				console.log err
 				db.save obj.guid, obj, (err,res) ->
 					if err
 						errh err
@@ -51,7 +49,7 @@ exports.delete = (dbname, guid, callback, errh) ->
 
 exports.all = (dbname, callback, errh) ->
 	this.connect dbname, (db) ->
-		db.view 'reminders/all', (err, res) ->
+		db.view "#{dbname}/all", (err, res) ->
 			if err
 				errh err
 			else
