@@ -1,4 +1,4 @@
-Syncable = require './syncable.js'
+Syncable = require './syncable'
 
 module.exports = class Reminder extends Syncable
 	constructor: (@when, @message="Default", @category="") ->

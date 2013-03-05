@@ -1,0 +1,30 @@
+{
+    "language": "javascript", 
+    "views": {
+        "all": {
+            "map": "function(doc) { emit(doc._id, doc) }"
+        }, 
+		"all_Activity": {
+			"map": "function(doc) { if (doc.type == 'Activity')  emit(doc._id, doc) }"
+		},
+        "all_Event": {
+            "map": "function(doc) { if (doc.type == 'Event')  emit(doc._id, doc) }"
+        },
+        "all_Memory": {
+            "map": "function(doc) { if (doc.type == 'Memory')  emit(doc._id, doc) }"
+        }, 
+        "all_Reminder": {
+            "map": "function(doc) { if (doc.type == 'Reminder') emit(doc._id, doc) }"
+        }, 
+        "all_Rule": {
+            "map": "function(doc) { if (doc.type == 'Rule') emit(doc._id, doc) }"
+        }, 
+        "all_Share": {
+            "map": "function(doc) { if (doc.type == 'Share') emit(doc._id, doc) }"
+        }, 
+		"distinct_category": {
+			"map": "function(doc) { emit(doc.category.trim(),null) }",
+			"reduce": "function(keys,values) { emit(null) }"
+		}
+    }
+}

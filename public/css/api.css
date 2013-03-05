@@ -1,0 +1,51 @@
+body {
+	background-size: auto 100px ;
+	background-repeat: no-repeat;
+	background-image: url(/img/hvalfjordur1.png);
+}
+
+
+header.pageheader {
+	display: block;
+}
+
+header.pageheader h1 {
+	text-align: center;
+}
+
+div.pageheader nav {
+	display: block;
+}
+
+div#left-nav {
+	margin-top: 20px;
+	border-right: solid black 1px;
+	height: 100%;
+}
+
+div#left-nav ul li{
+	list-style-type: none;
+}
+
+.nav-tabs {
+	border-bottom: none;
+}
+
+.nav {
+	margin-bottom: 0;
+}
+
+div.bordered-content {
+	position: absolute;
+	width: 100%;
+	opacity: 0;
+    -webkit-transition: all 1s;
+	-moz-transition: all 1s;
+    -ms-transition: all 1s;
+    -o-transition: all 1s;
+    transition: all 1s;
+}
+
+div.shown {
+	opacity: 1;
+}

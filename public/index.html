@@ -1,64 +1,129 @@
 <html>
 <head>
-	<title>API</title>
+	<title>Test</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" media="screen" href="css/bootstrap.min.css" >
+	<link rel="stylesheet" type="text/css" href="css/api.css">
 </head>
 <body>
-	<form method="post" action="/activity" enctype="application/json">
-		<div>
-			<label for="a_what">What</label>
-			<input id="a_what" type="text" name="what"/>
+	<header id="header" class="pageheader">
+		<h1>APIs</h1>
+	</header><!-- /header -->
+	<div class="row">
+		<div class="span2" id="left-nav">
+			<h3>New...</h3>
+			<ul>
+				<li><a href="#">Activity</a></li>
+				<li><a href="#">Reminder</a></li>
+				<li><a href="#">Event</a></li>
+				<li><a href="#">Share</a></li>
+			</ul>
 		</div>
-		<div>
-			<label for="a_category">Category</label>
-			<input id="a_category" type="text" name="category"/>
+		<div class="span10">
+			<nav>
+				<ul class="nav nav-tabs">
+					<li class="active" data="activities">
+						<a href="#">Activities</a>
+					</li>
+					<li data="reminders">
+						<a href="#">Reminders</a>
+					</li>
+					<li data="events">
+						<a href="#">Events</a>
+					</li>
+					<li data="shares">
+						<a href="#">Shares</a>
+					</li>
+				</ul>
+			</nav>
+			<div id="content">
+				<div id="activities" class="bordered-content shown">
+					<form method="post" action="/activity" enctype="application/json">
+						<div>
+							<label for="a_what">What</label>
+							<input id="a_what" type="text" name="what"/>
+						</div>
+						<div>
+							<label for="a_category">Category</label>
+							<input id="a_category" type="text" name="category"/>
+						</div>
+						<div class="real_when" id="areal_when">
+							<label for="a_when">When(*)</label>
+							<input class="real_i_when" id="a_when" type="datetime" name="when"/>
+						</div>
+						<div class="dummy_when" id="adummy_when">
+							<label for="ad_when">When</label>
+							<input class="dummy_i_when" id="ad_when" type="datetime" name="dummy_when"/>
+						</div>
+						<div>
+							<label for="a_quantity">Quantity</label>
+							<input id="a_quantity" type="text" name="quantity"/>
+						</div>
+						<input type="submit"></input>
+					</form>
+					<table id="a_table">
+						<thead>
+							<tr>
+								<th>What</th><th>When</th><th>Category</th><th>Qty</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+				<div id="events" class="bordered-content">
+					<form method="post" action="/event" enctype="application/json">
+						<div>
+							<label for="e_what">What</label>
+							<input id="e_what" type="text" name="what"/>
+						</div>
+						<div>
+							<label for="e_category">Category</label>
+							<input id="e_category" type="text" name="category"/>
+						</div>
+						<div class="real_when" id="ereal_when">
+							<label for="e_when">When(*)</label>
+							<input class="real_i_when" id="e_when" type="datetime" name="when"/>
+						</div>
+						<div class="dummy_when" id="edummy_when">
+							<label for="ed_when">When</label>
+							<input class="dummy_i_when" id="ed_when" type="datetime" name="dummy_when"/>
+						<div>
+							<label for="e_who">Who</label>
+							<input id="e_who" type="text" name="who"/>
+						</div>
+						<div>
+							<label for="e_where">Where</label>
+							<input id="e_where" type="text" name="where"/>
+						</div>
+						<input type="submit" />
+					</form>
+					<table id="e_table">
+						<thead>
+							<tr>
+								<th>What</th><th>When</th><th>Category</th><th>Who</th><th>Where</th>
+							</tr>
+						</thead>
+						<tbody></tbody>
+					</table>
+				</div>
+			</div>
 		</div>
-		<div id="real_when">
-			<label for="a_when">When(*)</label>
-			<input id="a_when" type="datetime" name="when"/>
-		</div>
-		<div id="dummy_when">
-			<label for="d_when">When</label>
-			<input id="d_when" type="datetime" name="dummy_when"/>
-		<div>
-			<label for="a_quantity">Quantity</label>
-			<input id="a_quantity" type="text" name="quantity"/>
-		</div>
-		<input type="submit">Submit</input>
-	</form>
-	<table id="a_table">
-		<thead>
-			<tr>
-				<th>What</th><th>When</th><th>Category</th><th>Qty</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript">
-$("#real_when").hide();
-$("#dummy_when").show();
-$("#d_when").val(new Date().toString());
-$("#d_when").blur(function(){
-	d = $("#d_when").val();
-	dd = Date.parse(d);
-	if(isNaN(dd)) {
-		$("#d_when").css('background-color','red');
-	} else {
-		$("#d_when").css('background-color','#00aa00');
-		$("#a_when").val(dd);
-	}
-});
-</script>
-<script type="text/javascript">
-$(function(){
-	$.getJSON('/activities', function(data) {
-  		var items = [];
- 		$.each(data, function(ndx, val) {
-    		items.push('<tr><td>'+val.what+'</td><td>'+val.when+'</td><td>'+val.category+'</td><td>'+val.quantity+'</td></tr>');
-  		});
- 		$('#a_table tbody').append(items.join(''));
-	});
-});
-</script>
+	</div>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/adjust-dom.js"></script>
+	<script type="text/javascript" src="js/api.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("ul.nav-tabs li").click(function(){
+				var tgt="";
+				$("ul.nav-tabs li").removeClass("active");
+				$(this).toggleClass("active");
+				$("div.bordered-content").removeClass("shown");
+				tgt= "#"+$(this).attr("data");
+				$(tgt).addClass("shown");
+			});
+		});
+	</script>
 </body>
 </html>

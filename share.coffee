@@ -1,4 +1,4 @@
-Syncable = require './syncable.js'
+Syncable = require './syncable'
 
 module.exports = class Share extends Syncable
 	constructor: (@info="Default", @person=[], @when=new Date(), @how=["email"]) ->

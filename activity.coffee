@@ -1,4 +1,4 @@
-Syncable = require './syncable.js'
+Syncable = require './syncable'
 
 module.exports = class Activity extends Syncable
 	constructor: (@what='Default', @category='', @when = new Date(), @quantity ="") ->

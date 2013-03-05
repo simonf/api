@@ -1,7 +1,8 @@
 util = require 'util'
 express = require 'express'
-db = require './db.js'
-Activity = require './activity.js'
+db = require './db'
+Activity = require './activity'
+Event = require './event'
 app = express()
 
 
@@ -19,11 +20,20 @@ errorHandler = (err, req, res, next) ->
 	res.status 500
 	res.render 'error', { error: err }
 
-saveSyncable = (input_object, vanilla_object, db_name, res) ->
+getAllOfType = (otype, res) ->
+	db.all otype, \
+		((arr) -> res.send arr), \
+		((err) -> 
+			res.status 500
+			res.send err
+			console.log err
+		)	
+
+saveSyncable = (input_object, vanilla_object, res) ->
 	console.log input_object
 	input_object.type = vanilla_object.type
 	vanilla_object.copy_from input_object
-	db.save db_name, vanilla_object, \
+	db.save vanilla_object, \
 		((doc) -> res.send 200), \
 		((err) -> 
 			res.status 500
@@ -39,27 +49,25 @@ app.use clientErrorHandler
 app.use errorHandler
 
 app.get "/reminders", (req,res) ->
-	db.all 'reminders',\
-		((arr) -> res.send arr), \
-		((err) -> 
-			res.status 500
-			res.send err
-		)
+	getAllOfType 'Reminder', res
 
 app.post "/reminder", (req,res) ->
-	saveSyncable req.body, new Reminder(), 'reminders', res
+	saveSyncable req.body, new Reminder(), res
 
 app.get "/activities", (req,res) ->
-	db.all 'activities', \
-		((arr) -> res.send arr), \
-		((err) -> 
-			res.status 500
-			res.send err
-		)	
+	getAllOfType 'Activity', res
 
 app.post "/activity", (req,res) ->
-	saveSyncable req.body, new Activity(), 'activities', res
+	saveSyncable req.body, new Activity(), res
 
+app.get "/events", (req,res) ->
+	getAllOfType 'Event', res
+
+app.post "/event", (req,res) ->
+	saveSyncable req.body, new Event(), res
+
+# make sure views exist
+db.init()
 app.listen 2000
 
 

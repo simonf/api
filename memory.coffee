@@ -1,4 +1,4 @@
-Syncable = require './syncable.js'
+Syncable = require './syncable'
 
 module.exports = class Memory extends Syncable
 	constructor: (@what, @categories=[]) ->
